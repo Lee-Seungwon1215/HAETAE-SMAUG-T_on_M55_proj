@@ -1,0 +1,202 @@
+{
+  "iterations_per_set": 100,
+  "method": "For each pair, every non-target selector is held at the selected post-Slothy configuration. The pre image links the exact assembly source supplied to Slothy; the post image links its generated output.",
+  "orders": [
+    [
+      "pre",
+      "post"
+    ],
+    [
+      "post",
+      "pre"
+    ]
+  ],
+  "pairs": [
+    {
+      "algorithms": [
+        "haetae2",
+        "haetae3",
+        "haetae5",
+        "smaugt1",
+        "smaugt3",
+        "smaugt5"
+      ],
+      "name": "keccak_x4",
+      "operations": [
+        "keccak_permutation_x4_mve",
+        "shake128_x4_mve"
+      ],
+      "post_changes": {
+        "KECCAK_X4_ASM_VARIANT": "slothy_gather_u2_fullperm_chi5_allpaths",
+        "KECCAK_X4_BACKEND": "asm_slothy"
+      },
+      "pre_changes": {
+        "KECCAK_X4_ASM_VARIANT": "preslothy_fullperm_chi5_allpaths",
+        "KECCAK_X4_BACKEND": "asm_slothy"
+      }
+    },
+    {
+      "algorithms": [
+        "haetae2",
+        "haetae3",
+        "haetae5"
+      ],
+      "name": "haetae_forward_ntt",
+      "operations": [
+        "ntt"
+      ],
+      "post_changes": {
+        "HAETAE_NTT_ASM_VARIANT": "paired_vld4_u2_l34_hier"
+      },
+      "pre_changes": {
+        "HAETAE_NTT_ASM_VARIANT": "preslothy"
+      }
+    },
+    {
+      "algorithms": [
+        "haetae2",
+        "haetae3",
+        "haetae5"
+      ],
+      "name": "haetae_inverse_ntt",
+      "operations": [
+        "invntt"
+      ],
+      "post_changes": {
+        "HAETAE_NTT_INVERSE_VARIANT": "slothy_u1"
+      },
+      "pre_changes": {
+        "HAETAE_NTT_INVERSE_VARIANT": "preslothy"
+      }
+    },
+    {
+      "algorithms": [
+        "haetae2",
+        "haetae3",
+        "haetae5"
+      ],
+      "name": "haetae_pointwise",
+      "operations": [
+        "pointwise"
+      ],
+      "post_changes": {
+        "HAETAE_NTT_POINTWISE_VARIANT": "slothy_lowmem"
+      },
+      "pre_changes": {
+        "HAETAE_NTT_POINTWISE_VARIANT": "preslothy_lowmem"
+      }
+    },
+    {
+      "algorithms": [
+        "haetae2",
+        "haetae3",
+        "haetae5"
+      ],
+      "name": "haetae_pointwise_acc",
+      "operations": [
+        "pointwise_acc",
+        "pointwise_acc_precentered",
+        "pointwise_acc_u16_precentered"
+      ],
+      "post_changes": {
+        "HAETAE_NTT_POINTWISE_ACC_VARIANT": "slothy_block2"
+      },
+      "pre_changes": {
+        "HAETAE_NTT_POINTWISE_ACC_VARIANT": "preslothy_block2"
+      }
+    },
+    {
+      "algorithms": [
+        "haetae2",
+        "haetae3",
+        "haetae5"
+      ],
+      "name": "haetae_barrett",
+      "operations": [
+        "barrett_tight"
+      ],
+      "post_changes": {
+        "HAETAE_NTT_BARRETT_VARIANT": "slothy_u2_nostack"
+      },
+      "pre_changes": {
+        "HAETAE_NTT_BARRETT_VARIANT": "preslothy_nostack"
+      }
+    },
+    {
+      "algorithms": [
+        "haetae2",
+        "haetae3",
+        "haetae5"
+      ],
+      "name": "haetae_centered",
+      "operations": [
+        "reduce2q",
+        "freeze2q",
+        "freeze"
+      ],
+      "post_changes": {
+        "HAETAE_NTT_CENTERED_VARIANT": "slothy_mask_u2"
+      },
+      "pre_changes": {
+        "HAETAE_NTT_CENTERED_VARIANT": "preslothy_mask"
+      }
+    },
+    {
+      "algorithms": [
+        "haetae2",
+        "haetae3",
+        "haetae5"
+      ],
+      "name": "haetae_fft",
+      "operations": [
+        "fft",
+        "fft_fused_sqabs"
+      ],
+      "post_changes": {
+        "HAETAE_FFT_ASM_VARIANT": "soa_reuse_vecsq_u2_hier"
+      },
+      "pre_changes": {
+        "HAETAE_FFT_ASM_VARIANT": "preslothy_vecsq_u2"
+      }
+    },
+    {
+      "algorithms": [
+        "haetae2",
+        "haetae3",
+        "haetae5"
+      ],
+      "name": "haetae_sampler",
+      "operations": [
+        "sampler_cdt_leaf",
+        "sampler_gauss_N"
+      ],
+      "post_changes": {
+        "HAETAE_SAMPLER_ASM_VARIANT": "mask_u2",
+        "HAETAE_SAMPLER_BACKEND": "asm_slothy"
+      },
+      "pre_changes": {
+        "HAETAE_SAMPLER_ASM_VARIANT": "preslothy_mask",
+        "HAETAE_SAMPLER_BACKEND": "asm_slothy"
+      }
+    },
+    {
+      "algorithms": [
+        "smaugt1",
+        "smaugt3",
+        "smaugt5"
+      ],
+      "name": "smaugt_toom",
+      "operations": [
+        "poly_mul_acc",
+        "matrix_vec_mult"
+      ],
+      "post_changes": {
+        "SMAUGT_TOOM_ASM_VARIANT": "slothy_fused_tailpred_stable_u1"
+      },
+      "pre_changes": {
+        "SMAUGT_TOOM_ASM_VARIANT": "preslothy_fused"
+      }
+    }
+  ],
+  "qemu_used_for_reportable_results": false
+}

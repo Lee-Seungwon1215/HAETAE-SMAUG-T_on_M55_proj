@@ -1,0 +1,56 @@
+reference/haetae/HAETAE3/packing.c: In function 'cryptolab_haetae_mode3_unpack_sig':
+reference/haetae/HAETAE3/packing.c:277:12: warning: declaration of 'i' shadows a previous local [-Wshadow]
+  277 |   for (int i = 0;
+      |            ^
+reference/haetae/HAETAE3/packing.c:245:16: note: shadowed declaration is here
+  245 |   unsigned int i;
+      |                ^
+reference/haetae/HAETAE3/sampler.c: In function 'sample_gauss':
+reference/haetae/HAETAE3/sampler.c:240:41: warning: variable 'cnt' set but not used [-Wunused-but-set-variable=]
+  240 |   size_t bytecnt = buflen, coefcnt = 0, cnt = 0;
+      |                                         ^~~
+reference/haetae/HAETAE3/sign.c: In function 'cryptolab_haetae_mode3_verify':
+reference/haetae/HAETAE3/sign.c:511:10: warning: unused variable 'i' [-Wunused-variable]
+  511 |   size_t i;
+      |          ^
+   text	   data	    bss	    dec	    hex	filename
+  38000	      0	1070096	1108096	 10e880	build/stm32n657/clock-600mhz/reference/haetae3/iter-1/profile-0/diff-0/rejection-0/keccak-c/kernel-m4_scalar/rc-memory/x4-0-asm_slothy-slothy_gather_u2_fullperm_chi5_allpaths/ntt-scalar-intrinsic-hand_l332_vld4_u2-arith_d1-inv_hand-point_hand-pointacc_hand-barrett_hand-centered_hand/acc-none/fft-scalar-intrinsic-hand_soa_l2222/sampler-scalar-intrinsic-loop/mul-scalar-asm_slothy-slothy_fused_tailpred_stable_u1-all/cache-0/shift-copy/stack-baseline/haetae3.elf
+KPQC_M55_BENCH,version=1,scheme=HAETAE3,implementation=reference,platform=stm32n657,timer=dwt_cyccnt,iterations=1,warmup_iterations=1
+PLATFORM_CONFIG,name=stm32n657,core_clock_hz=600000000,hclk_hz=200000000,axisram_clock_hz=400000000,icache=on,dcache=on,interrupts=disabled,code_data=secure_axisram,timer_read_overhead=5
+SIZES,public_key=1472,secret_key=2112,signature=2349
+SELFTEST,ok
+RESULT,scheme=HAETAE3,implementation=reference,operation=keypair,sample=1,ticks=9093737
+SUMMARY,scheme=HAETAE3,implementation=reference,operation=keypair,min=9093737,max=9093737,mean=9093737,median=9093737
+STACK,scheme=HAETAE3,implementation=reference,operation=keypair,peak_bytes=41536
+RESULT,scheme=HAETAE3,implementation=reference,operation=sign,sample=1,ticks=90343875
+SUMMARY,scheme=HAETAE3,implementation=reference,operation=sign,min=90343875,max=90343875,mean=90343875,median=90343875
+STACK,scheme=HAETAE3,implementation=reference,operation=sign,peak_bytes=126808
+RESULT,scheme=HAETAE3,implementation=reference,operation=verify,sample=1,ticks=2768357
+SUMMARY,scheme=HAETAE3,implementation=reference,operation=verify,min=2768357,max=2768357,mean=2768357,median=2768357
+STACK,scheme=HAETAE3,implementation=reference,operation=verify,peak_bytes=61008
+RESULT,scheme=HAETAE3,implementation=reference,operation=ntt,sample=1,ticks=27486
+SUMMARY,scheme=HAETAE3,implementation=reference,operation=ntt,min=27486,max=27486,mean=27486,median=27486
+STACK,scheme=HAETAE3,implementation=reference,operation=ntt,peak_bytes=432
+RESULT,scheme=HAETAE3,implementation=reference,operation=invntt,sample=1,ticks=36251
+SUMMARY,scheme=HAETAE3,implementation=reference,operation=invntt,min=36251,max=36251,mean=36251,median=36251
+STACK,scheme=HAETAE3,implementation=reference,operation=invntt,peak_bytes=432
+RESULT,scheme=HAETAE3,implementation=reference,operation=pointwise,sample=1,ticks=5152
+SUMMARY,scheme=HAETAE3,implementation=reference,operation=pointwise,min=5152,max=5152,mean=5152,median=5152
+STACK,scheme=HAETAE3,implementation=reference,operation=pointwise,peak_bytes=432
+RESULT,scheme=HAETAE3,implementation=reference,operation=pointwise_acc,sample=1,ticks=44709
+SUMMARY,scheme=HAETAE3,implementation=reference,operation=pointwise_acc,min=44709,max=44709,mean=44709,median=44709
+STACK,scheme=HAETAE3,implementation=reference,operation=pointwise_acc,peak_bytes=1256
+RESULT,scheme=HAETAE3,implementation=reference,operation=fft_init,sample=1,ticks=3882
+SUMMARY,scheme=HAETAE3,implementation=reference,operation=fft_init,min=3882,max=3882,mean=3882,median=3882
+STACK,scheme=HAETAE3,implementation=reference,operation=fft_init,peak_bytes=432
+RESULT,scheme=HAETAE3,implementation=reference,operation=fft,sample=1,ticks=60005
+SUMMARY,scheme=HAETAE3,implementation=reference,operation=fft,min=60005,max=60005,mean=60005,median=60005
+STACK,scheme=HAETAE3,implementation=reference,operation=fft,peak_bytes=432
+RESULT,scheme=HAETAE3,implementation=reference,operation=fft_sqabs,sample=1,ticks=9063
+SUMMARY,scheme=HAETAE3,implementation=reference,operation=fft_sqabs,min=9063,max=9063,mean=9063,median=9063
+STACK,scheme=HAETAE3,implementation=reference,operation=fft_sqabs,peak_bytes=432
+RESULT,scheme=HAETAE3,implementation=reference,operation=sampler_gauss_N,sample=1,ticks=1022871
+SUMMARY,scheme=HAETAE3,implementation=reference,operation=sampler_gauss_N,min=1022871,max=1022871,mean=1022871,median=1022871
+STACK,scheme=HAETAE3,implementation=reference,operation=sampler_gauss_N,peak_bytes=4952
+MEMORY,stack_peak_bytes=126808
+STATUS,ok

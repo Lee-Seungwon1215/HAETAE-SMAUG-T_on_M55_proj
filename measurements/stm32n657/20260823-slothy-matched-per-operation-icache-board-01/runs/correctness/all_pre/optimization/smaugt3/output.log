@@ -1,0 +1,45 @@
+/opt/homebrew/opt/arm-none-eabi-binutils/bin/arm-none-eabi-ld: warning: build/stm32n657/clock-600mhz/optimization/smaugt3/iter-1/profile-0/diff-1/rejection-0/ct-0-none-unknown-1000/keccak-pqm4_persistent/kernel-m55_scalar_sched/rc-memory/x4-1-asm_slothy-preslothy_fullperm_chi5_allpaths/ntt-scalar-intrinsic-hand_l332_vld4_u2-arith_d1-inv_hand-point_hand-pointacc_hand-barrett_hand-centered_hand/acc-none/fft-scalar-intrinsic-hand_soa_l2222/sampler-scalar-intrinsic-loop/mul-toom4_outer32-asm_slothy-preslothy_fused-all/cache-1/shift-mask/stack-baseline/reference-objects/prefixed/fips202.o: missing .note.GNU-stack section implies executable stack
+/opt/homebrew/opt/arm-none-eabi-binutils/bin/arm-none-eabi-ld: NOTE: This behaviour is deprecated and will be removed in a future version of the linker
+   text	   data	    bss	    dec	    hex	filename
+  53248	     16	1082960	1136224	 115660	build/stm32n657/clock-600mhz/optimization/smaugt3/iter-1/profile-0/diff-1/rejection-0/ct-0-none-unknown-1000/keccak-pqm4_persistent/kernel-m55_scalar_sched/rc-memory/x4-1-asm_slothy-preslothy_fullperm_chi5_allpaths/ntt-scalar-intrinsic-hand_l332_vld4_u2-arith_d1-inv_hand-point_hand-pointacc_hand-barrett_hand-centered_hand/acc-none/fft-scalar-intrinsic-hand_soa_l2222/sampler-scalar-intrinsic-loop/mul-toom4_outer32-asm_slothy-preslothy_fused-all/cache-1/shift-mask/stack-baseline/smaugt3.elf
+KPQC_M55_BENCH,version=1,scheme=SMAUG-T3,implementation=optimization,platform=stm32n657,timer=dwt_cyccnt,iterations=1,warmup_iterations=1
+PLATFORM_CONFIG,name=stm32n657,core_clock_hz=600000000,hclk_hz=200000000,axisram_clock_hz=400000000,icache=on,dcache=on,interrupts=disabled,code_data=secure_axisram,timer_read_overhead=5
+SIZES,public_key=1088,secret_key=1312,ciphertext=992
+SELFTEST,ok
+KAT,status=ok
+DIFF,iterations=1000,status=ok
+RESULT,scheme=SMAUG-T3,implementation=optimization,operation=keccak_permutation,sample=1,ticks=11421
+SUMMARY,scheme=SMAUG-T3,implementation=optimization,operation=keccak_permutation,min=11421,max=11421,mean=11421,median=11421
+STACK,scheme=SMAUG-T3,implementation=optimization,operation=keccak_permutation,peak_bytes=320
+RESULT,scheme=SMAUG-T3,implementation=optimization,operation=keccak_stream,sample=1,ticks=62035
+SUMMARY,scheme=SMAUG-T3,implementation=optimization,operation=keccak_stream,min=62035,max=62035,mean=62035,median=62035
+STACK,scheme=SMAUG-T3,implementation=optimization,operation=keccak_stream,peak_bytes=320
+RESULT,scheme=SMAUG-T3,implementation=optimization,operation=keccak_permutation_x4_sequential,sample=1,ticks=45309
+SUMMARY,scheme=SMAUG-T3,implementation=optimization,operation=keccak_permutation_x4_sequential,min=45309,max=45309,mean=45309,median=45309
+STACK,scheme=SMAUG-T3,implementation=optimization,operation=keccak_permutation_x4_sequential,peak_bytes=336
+RESULT,scheme=SMAUG-T3,implementation=optimization,operation=keccak_permutation_x4_mve,sample=1,ticks=26096
+SUMMARY,scheme=SMAUG-T3,implementation=optimization,operation=keccak_permutation_x4_mve,min=26096,max=26096,mean=26096,median=26096
+STACK,scheme=SMAUG-T3,implementation=optimization,operation=keccak_permutation_x4_mve,peak_bytes=352
+RESULT,scheme=SMAUG-T3,implementation=optimization,operation=shake128_x4_sequential,sample=1,ticks=56662
+SUMMARY,scheme=SMAUG-T3,implementation=optimization,operation=shake128_x4_sequential,min=56662,max=56662,mean=56662,median=56662
+STACK,scheme=SMAUG-T3,implementation=optimization,operation=shake128_x4_sequential,peak_bytes=568
+RESULT,scheme=SMAUG-T3,implementation=optimization,operation=shake128_x4_mve,sample=1,ticks=26842
+SUMMARY,scheme=SMAUG-T3,implementation=optimization,operation=shake128_x4_mve,min=26842,max=26842,mean=26842,median=26842
+STACK,scheme=SMAUG-T3,implementation=optimization,operation=shake128_x4_mve,peak_bytes=1360
+RESULT,scheme=SMAUG-T3,implementation=optimization,operation=keypair,sample=1,ticks=947451
+SUMMARY,scheme=SMAUG-T3,implementation=optimization,operation=keypair,min=947451,max=947451,mean=947451,median=947451
+STACK,scheme=SMAUG-T3,implementation=optimization,operation=keypair,peak_bytes=16464
+RESULT,scheme=SMAUG-T3,implementation=optimization,operation=encapsulate,sample=1,ticks=818106
+SUMMARY,scheme=SMAUG-T3,implementation=optimization,operation=encapsulate,min=818106,max=818106,mean=818106,median=818106
+STACK,scheme=SMAUG-T3,implementation=optimization,operation=encapsulate,peak_bytes=18600
+RESULT,scheme=SMAUG-T3,implementation=optimization,operation=decapsulate,sample=1,ticks=1033308
+SUMMARY,scheme=SMAUG-T3,implementation=optimization,operation=decapsulate,min=1033308,max=1033308,mean=1033308,median=1033308
+STACK,scheme=SMAUG-T3,implementation=optimization,operation=decapsulate,peak_bytes=19696
+RESULT,scheme=SMAUG-T3,implementation=optimization,operation=poly_mul_acc,sample=1,ticks=37281
+SUMMARY,scheme=SMAUG-T3,implementation=optimization,operation=poly_mul_acc,min=37281,max=37281,mean=37281,median=37281
+STACK,scheme=SMAUG-T3,implementation=optimization,operation=poly_mul_acc,peak_bytes=5328
+RESULT,scheme=SMAUG-T3,implementation=optimization,operation=matrix_vec_mult,sample=1,ticks=288611
+SUMMARY,scheme=SMAUG-T3,implementation=optimization,operation=matrix_vec_mult,min=288611,max=288611,mean=288611,median=288611
+STACK,scheme=SMAUG-T3,implementation=optimization,operation=matrix_vec_mult,peak_bytes=8072
+MEMORY,stack_peak_bytes=19816
+STATUS,ok

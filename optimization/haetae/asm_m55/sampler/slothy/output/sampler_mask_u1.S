@@ -1,0 +1,84 @@
+// SPDX-License-Identifier: MIT
+
+// Complete constant-time CDT leaf without MVE predicate instructions.
+// Each unsigned 16-bit threshold is widened before subtraction, so
+// (threshold - random) >> 31
+// is one exactly when random > threshold and zero otherwise. The low and high
+// halves are folded into one four-lane accumulator. q0-q3 are caller-saved;
+// r2 retains the return address while lr owns the low-overhead loop.
+
+.syntax unified
+.thumb
+.arch armv8.1-m.main
+.arch_extension mve
+
+.section .text.haetae_sample_gauss16_cdt_mve, "ax", %progbits
+.align 2
+.global haetae_sample_gauss16_cdt_mve
+.type haetae_sample_gauss16_cdt_mve, %function
+.thumb_func
+haetae_sample_gauss16_cdt_mve:
+        mov r2, lr
+        vdup.32 q0, r0
+        vmov.i32 q1, #0
+        ldr r1, =haetae_asm_cdt16
+        mov lr, #8
+        dls lr, lr
+                // Instructions:    0
+                // Expected cycles: 0
+                // Expected IPC:    0.00
+                //
+                // Wall time:     0.00s
+                // User time:     0.00s
+                //
+.p2align 2
+haetae_sampler_mask_loop:
+                                       // Instructions:    9
+                                       // Expected cycles: 16
+                                       // Expected IPC:    0.56
+                                       //
+                                       // Cycle bound:     16.0
+                                       // IPC bound:       0.56
+                                       //
+                                       // Wall time:     0.05s
+                                       // User time:     0.05s
+                                       //
+                                       // ----- cycle (expected) ------>
+                                       // 0                        25
+                                       // |------------------------|----
+        vldrh.U16 q2, [r1], #16        // *.............................
+        vmovlt.U16 q3, q2              // .*............................
+        vmovlb.U16 q2, q2              // ...*..........................
+        vsub.I32 q2, q2, q0            // .....*........................
+        vsub.I32 q3, q3, q0            // .......*......................
+        vshr.U32 q2, q2, #31           // .........*....................
+        vshr.U32 q3, q3, #31           // ...........*..................
+        vadd.U32 q2, q2, q3            // .............*................
+        vadd.U32 q1, q1, q2            // ...............*..............
+
+                                        // ------ cycle (expected) ------>
+                                        // 0                        25
+                                        // |------------------------|-----
+        // vldrh.u16 q2, [r1], #16      // *...............~..............
+        // vmovlt.u16 q3, q2            // .*..............'~.............
+        // vmovlb.u16 q2, q2            // ...*............'..~...........
+        // vsub.i32 q2, q2, q0          // .....*..........'....~.........
+        // vsub.i32 q3, q3, q0          // .......*........'......~.......
+        // vshr.u32 q2, q2, #31         // .........*......'........~.....
+        // vshr.u32 q3, q3, #31         // ...........*....'..........~...
+        // vadd.u32 q2, q2, q3          // .............*..'............~.
+        // vadd.u32 q1, q1, q2          // ...............*'..............
+
+        le lr, haetae_sampler_mask_loop
+                // Instructions:    0
+                // Expected cycles: 0
+                // Expected IPC:    0.00
+                //
+                // Wall time:     0.00s
+                // User time:     0.00s
+                //
+        movs r0, #0
+        vaddva.u32 r0, q1
+        movs r1, #0
+        bx r2
+.size haetae_sample_gauss16_cdt_mve, .-haetae_sample_gauss16_cdt_mve

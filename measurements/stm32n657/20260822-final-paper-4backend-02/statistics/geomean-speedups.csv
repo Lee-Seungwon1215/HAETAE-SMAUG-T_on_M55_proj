@@ -1,0 +1,4 @@
+scope,cells,assembly_speedup_vs_intrinsic,slothy_speedup_vs_assembly,final_speedup_vs_intrinsic,final_speedup_vs_reference
+haetae,9,1.03952,1.06627,1.1084,2.14368
+smaugt,9,1.09382,1.06948,1.16982,1.91225
+all,18,1.06632,1.06787,1.1387,2.02466

@@ -1,0 +1,59 @@
+# Publish only what is needed to build, test, and reproduce the paper results.
+# Everything at the top level is ignored unless explicitly allowed below.
+/*
+!/.gitignore
+!/README.md
+!/REPRODUCING.md
+!/LICENSE
+!/Makefile
+!/optimization/
+!/reference/
+!/bench/
+!/platform/
+!/scripts/
+!/measurements/
+
+# Build products and caches inside the published directories.
+.DS_Store
+__pycache__/
+*.pyc
+*.o
+*.elf
+optimization/**/slothy/logs/
+optimization/**/slothy/logs_*/
+
+# Publish only the two physical-board datasets used by the final paper tables.
+measurements/*
+!measurements/README.md
+!measurements/stm32n657/
+measurements/stm32n657/*
+!measurements/stm32n657/README.md
+!measurements/stm32n657/20260822-final-paper-4backend-02/
+!measurements/stm32n657/20260823-slothy-matched-per-operation-icache-board-01/
+
+# Raw cycle logs and compact statistics are sufficient to recompute the paper
+# tables. Exclude duplicate binaries, linker maps, dirty-tree snapshots, host
+# logs, and descriptors containing the local debug-probe serial number.
+measurements/stm32n657/20260822-final-paper-4backend-02/constant_time/
+measurements/stm32n657/*/git-diff.patch
+measurements/stm32n657/*/metadata.json
+measurements/stm32n657/*/probe*.log
+measurements/stm32n657/*/source-snapshot.tar.gz
+measurements/stm32n657/*/source_sha256.json
+measurements/stm32n657/**/runs/**/run.json
+measurements/stm32n657/**/runs/**/*.map
+measurements/stm32n657/**/runs/**/elf-sections.txt
+measurements/stm32n657/**/runs/**/sections.txt
+
+# AIMer/NTRU+ imports and harnesses are not part of this paper artifact.
+bench/bench_aimer.c
+bench/bench_ntruplus.c
+bench/diff_aimer.c
+bench/diff_ntruplus.c
+bench/compat/aimer/
+platform/mps3-an547/linker-aimer.ld
+
+# Editor and temporary files
+*~
+*.swp
+*.swo

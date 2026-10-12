@@ -1,0 +1,564 @@
+/* SPDX-License-Identifier: MIT */
+
+/*
+ * Handwritten Armv8.1-M/MVE implementation of the active SMAUG-T Toom-4
+ * outer32 path.  This is intentionally separate from smaugt_toom_mve.c so the
+ * intrinsic baseline remains buildable byte-for-byte.
+ *
+ * All loop bounds and addresses depend only on public fixed dimensions.  The
+ * cached multiplication entry accumulates the 64x64 result directly into its
+ * Toom point and therefore removes the former product[127] store/load pass.
+ */
+
+.syntax unified
+.thumb
+.arch armv8.1-m.main
+.arch_extension mve
+
+.macro SMAUGT_FUNCTION name
+  .align 2
+  .global \name
+  .type \name, %function
+  .thumb_func
+\name:
+.endm
+
+.macro SMAUGT_END name
+  .size \name, .-\name
+.endm
+
+/* r0=a[256], r1=w[7][64], r2=public mask. */
+SMAUGT_FUNCTION smaugt_toom_evaluate_m55
+  rbit r3, r2
+  clz r3, r3
+  rsb r3, r3, #0
+  push {r4-r10, lr}
+  vpush {d8-d15}
+
+  vdup.16 q6, r2
+  vdup.16 q7, r3
+  mov r4, r1
+  add.w r5, r1, #128
+  add.w r6, r1, #256
+  add.w r7, r1, #384
+  add.w r8, r1, #512
+  add.w r9, r1, #640
+  add.w r10, r1, #768
+  add.w r2, r0, #256
+  add.w r3, r0, #384
+  movs r12, #8
+
+.Lsmaugt_eval_loop:
+smaugt_slothy_eval_start:
+  vldrh.u16 q0, [r0]
+  vldrh.u16 q1, [r0, #128]
+  vldrh.u16 q2, [r2], #16
+  vldrh.u16 q3, [r3], #16
+  add r0, r0, #16
+  vand.u16 q0, q0, q6
+  vand.u16 q1, q1, q6
+  vand.u16 q2, q2, q6
+  vand.u16 q3, q3, q6
+  vshl.s16 q0, q0, q7
+  vshl.s16 q1, q1, q7
+  vshl.s16 q2, q2, q7
+  vshl.s16 q3, q3, q7
+
+  /* w0=a3 and w6=a0. */
+  vstrh.16 q3, [r4], #16
+  vstrh.16 q0, [r10], #16
+
+  /* w2=(a0+a2)+(a1+a3), w3=(a0+a2)-(a1+a3). */
+  vadd.i16 q4, q0, q2
+  vadd.i16 q5, q1, q3
+  vadd.i16 q4, q4, q5
+  vstrh.16 q4, [r6], #16
+  vadd.i16 q4, q0, q2
+  vsub.i16 q4, q4, q5
+  vstrh.16 q4, [r7], #16
+
+  /* w1=8*a3+4*a2+2*a1+a0. */
+  vshl.i16 q4, q3, #3
+  vshl.i16 q5, q2, #2
+  vadd.i16 q4, q4, q5
+  vshl.i16 q5, q1, #1
+  vadd.i16 q4, q4, q5
+  vadd.i16 q4, q4, q0
+  vstrh.16 q4, [r5], #16
+
+  /* w4/w5 = 2*(4*a0+a2) +/- (4*a1+a3). */
+  vshl.i16 q4, q0, #2
+  vadd.i16 q4, q4, q2
+  vshl.i16 q4, q4, #1
+  vshl.i16 q5, q1, #2
+  vadd.i16 q5, q5, q3
+  vadd.i16 q0, q4, q5
+  vsub.i16 q1, q4, q5
+  vstrh.16 q0, [r8], #16
+  vstrh.16 q1, [r9], #16
+smaugt_slothy_eval_end:
+
+  subs r12, r12, #1
+  bne .Lsmaugt_eval_loop
+
+  vpop {d8-d15}
+  pop {r4-r10, pc}
+SMAUGT_END smaugt_toom_evaluate_m55
+
+/* Normal output and fused-accumulation entry points share the multiply body. */
+SMAUGT_FUNCTION smaugt_toom_mul64_outer32_m55
+  movs r3, #0
+  b .Lsmaugt_mul64_common
+SMAUGT_END smaugt_toom_mul64_outer32_m55
+
+SMAUGT_FUNCTION smaugt_toom_mul64_outer32_acc_m55
+  movs r3, #1
+
+.Lsmaugt_mul64_common:
+  push {r4-r11, lr}
+  sub sp, sp, #4
+  vpush {d8-d15}
+  sub.w sp, sp, #520
+  str.w r3, [sp, #512]
+  mov r9, r0
+  mov r10, r1
+  mov r11, r2
+
+  /* Frame: asum[32], bsum[32], z0[64], z1[64], z2[64], mode. */
+  mov r4, sp
+  add.w r5, sp, #64
+  add.w r6, sp, #128
+  add.w r7, sp, #256
+  add.w r8, sp, #384
+
+  mov r0, r9
+  mov r1, r10
+  mov r2, r4
+  mov r3, r5
+  movs r12, #4
+.Lsmaugt_sum32_loop:
+smaugt_slothy_sum32_start:
+  vldrh.u16 q0, [r0]
+  vldrh.u16 q1, [r0, #64]
+  vldrh.u16 q2, [r1]
+  vldrh.u16 q3, [r1, #64]
+  vadd.i16 q0, q0, q1
+  vadd.i16 q2, q2, q3
+  vstrh.16 q0, [r2], #16
+  vstrh.16 q2, [r3], #16
+  add r0, r0, #16
+  add r1, r1, #16
+smaugt_slothy_sum32_end:
+  subs r12, r12, #1
+  bne .Lsmaugt_sum32_loop
+
+  /* Zero the three padded 64-coefficient leaf products in one pass. */
+  vmov.i32 q0, #0
+  mov r0, r6
+  movs r1, #24
+.Lsmaugt_zero_leaves:
+smaugt_slothy_zero_leaves_start:
+  vstrh.16 q0, [r0], #16
+smaugt_slothy_zero_leaves_end:
+  subs r1, r1, #1
+  bne .Lsmaugt_zero_leaves
+
+  mov r0, r9
+  mov r1, r10
+  mov r2, r6
+  vldrh.u16 q4, [r1]
+  vldrh.u16 q5, [r1, #16]
+  vldrh.u16 q6, [r1, #32]
+  vldrh.u16 q7, [r1, #48]
+  movs r3, #32
+.Lsmaugt_leaf_z0:
+smaugt_slothy_leaf_z0_start:
+  ldrsh r12, [r0], #2
+  vldrh.u16 q0, [r2]
+  vmla.i16 q0, q4, r12
+  vstrh.16 q0, [r2]
+  vldrh.u16 q1, [r2, #16]
+  vmla.i16 q1, q5, r12
+  vstrh.16 q1, [r2, #16]
+  vldrh.u16 q2, [r2, #32]
+  vmla.i16 q2, q6, r12
+  vstrh.16 q2, [r2, #32]
+  vldrh.u16 q3, [r2, #48]
+  vmla.i16 q3, q7, r12
+  vstrh.16 q3, [r2, #48]
+  add r2, r2, #2
+smaugt_slothy_leaf_z0_end:
+  subs r3, r3, #1
+  bne .Lsmaugt_leaf_z0
+
+  add r0, r9, #64
+  add r1, r10, #64
+  mov r2, r8
+  vldrh.u16 q4, [r1]
+  vldrh.u16 q5, [r1, #16]
+  vldrh.u16 q6, [r1, #32]
+  vldrh.u16 q7, [r1, #48]
+  movs r3, #32
+.Lsmaugt_leaf_z2:
+smaugt_slothy_leaf_z2_start:
+  ldrsh r12, [r0], #2
+  vldrh.u16 q0, [r2]
+  vmla.i16 q0, q4, r12
+  vstrh.16 q0, [r2]
+  vldrh.u16 q1, [r2, #16]
+  vmla.i16 q1, q5, r12
+  vstrh.16 q1, [r2, #16]
+  vldrh.u16 q2, [r2, #32]
+  vmla.i16 q2, q6, r12
+  vstrh.16 q2, [r2, #32]
+  vldrh.u16 q3, [r2, #48]
+  vmla.i16 q3, q7, r12
+  vstrh.16 q3, [r2, #48]
+  add r2, r2, #2
+smaugt_slothy_leaf_z2_end:
+  subs r3, r3, #1
+  bne .Lsmaugt_leaf_z2
+
+  mov r0, r4
+  mov r1, r5
+  mov r2, r7
+  vldrh.u16 q4, [r1]
+  vldrh.u16 q5, [r1, #16]
+  vldrh.u16 q6, [r1, #32]
+  vldrh.u16 q7, [r1, #48]
+  movs r3, #32
+.Lsmaugt_leaf_z1:
+smaugt_slothy_leaf_z1_start:
+  ldrsh r12, [r0], #2
+  vldrh.u16 q0, [r2]
+  vmla.i16 q0, q4, r12
+  vstrh.16 q0, [r2]
+  vldrh.u16 q1, [r2, #16]
+  vmla.i16 q1, q5, r12
+  vstrh.16 q1, [r2, #16]
+  vldrh.u16 q2, [r2, #32]
+  vmla.i16 q2, q6, r12
+  vstrh.16 q2, [r2, #32]
+  vldrh.u16 q3, [r2, #48]
+  vmla.i16 q3, q7, r12
+  vstrh.16 q3, [r2, #48]
+  add r2, r2, #2
+smaugt_slothy_leaf_z1_end:
+  subs r3, r3, #1
+  bne .Lsmaugt_leaf_z1
+
+  ldr.w r3, [sp, #512]
+  cmp r3, #0
+  bne .Lsmaugt_compose_acc
+
+  /* Normal result: clear exactly 127 halfwords. */
+  vmov.i32 q0, #0
+  mov r0, r11
+  movs r1, #15
+.Lsmaugt_zero_out_vec:
+  vstrh.16 q0, [r0], #16
+  subs r1, r1, #1
+  bne .Lsmaugt_zero_out_vec
+  movs r1, #0
+  movs r2, #7
+.Lsmaugt_zero_out_tail:
+  strh r1, [r0], #2
+  subs r2, r2, #1
+  bne .Lsmaugt_zero_out_tail
+
+  /* Install z0 and z2 before adding the overlapping middle product. */
+  mov r0, r6
+  mov r1, r8
+  mov r2, r11
+  add.w r3, r11, #128
+  movs r12, #7
+.Lsmaugt_copy_edges_vec:
+smaugt_slothy_copy_edges_start:
+  vldrh.u16 q0, [r0], #16
+  vldrh.u16 q1, [r1], #16
+  vstrh.16 q0, [r2], #16
+  vstrh.16 q1, [r3], #16
+smaugt_slothy_copy_edges_end:
+  subs r12, r12, #1
+  bne .Lsmaugt_copy_edges_vec
+  movs r12, #7
+.Lsmaugt_copy_edges_tail:
+  ldrh r4, [r0], #2
+  ldrh r5, [r1], #2
+  strh r4, [r2], #2
+  strh r5, [r3], #2
+  subs r12, r12, #1
+  bne .Lsmaugt_copy_edges_tail
+  b .Lsmaugt_add_middle
+
+.Lsmaugt_compose_acc:
+  /* Fused cached path: accumulate z0/z2 directly into the destination. */
+  mov r0, r6
+  mov r1, r8
+  mov r2, r11
+  add.w r3, r11, #128
+  movs r12, #7
+.Lsmaugt_acc_edges_vec:
+smaugt_slothy_acc_edges_start:
+  vldrh.u16 q0, [r0], #16
+  vldrh.u16 q1, [r1], #16
+  vldrh.u16 q2, [r2]
+  vldrh.u16 q3, [r3]
+  vadd.i16 q0, q0, q2
+  vadd.i16 q1, q1, q3
+  vstrh.16 q0, [r2], #16
+  vstrh.16 q1, [r3], #16
+smaugt_slothy_acc_edges_end:
+  subs r12, r12, #1
+  bne .Lsmaugt_acc_edges_vec
+  movs r12, #7
+.Lsmaugt_acc_edges_tail:
+  ldrh r4, [r0], #2
+  ldrh r5, [r1], #2
+  ldrh r9, [r2]
+  ldrh r10, [r3]
+  add r4, r4, r9
+  add r5, r5, r10
+  strh r4, [r2], #2
+  strh r5, [r3], #2
+  subs r12, r12, #1
+  bne .Lsmaugt_acc_edges_tail
+
+.Lsmaugt_add_middle:
+  mov r0, r6
+  mov r1, r7
+  mov r2, r8
+  add.w r3, r11, #64
+  movs r12, #7
+.Lsmaugt_middle_vec:
+smaugt_slothy_middle_start:
+  vldrh.u16 q0, [r0], #16
+  vldrh.u16 q1, [r1], #16
+  vldrh.u16 q2, [r2], #16
+  vldrh.u16 q3, [r3]
+  vsub.i16 q1, q1, q0
+  vsub.i16 q1, q1, q2
+  vadd.i16 q3, q3, q1
+  vstrh.16 q3, [r3], #16
+smaugt_slothy_middle_end:
+  subs r12, r12, #1
+  bne .Lsmaugt_middle_vec
+  movs r12, #7
+.Lsmaugt_middle_tail:
+  ldrh r4, [r0], #2
+  ldrh r5, [r1], #2
+  ldrh r6, [r2], #2
+  ldrh r7, [r3]
+  sub r5, r5, r4
+  sub r5, r5, r6
+  add r7, r7, r5
+  strh r7, [r3], #2
+  subs r12, r12, #1
+  bne .Lsmaugt_middle_tail
+
+  add.w sp, sp, #520
+  vpop {d8-d15}
+  add sp, sp, #4
+  pop {r4-r11, pc}
+SMAUGT_END smaugt_toom_mul64_outer32_acc_m55
+
+/* r0=c[512], r1=w[7][127].  Four widened coefficients per iteration. */
+SMAUGT_FUNCTION smaugt_toom_interpolate_add_m55
+  push {r4-r11, lr}
+  sub sp, sp, #4
+  vpush {d8-d15}
+  sub sp, sp, #48
+
+  mov r4, r1
+  add.w r5, r4, #254
+  add.w r6, r5, #254
+  add.w r7, r6, #254
+  add.w r8, r7, #254
+  add.w r9, r8, #254
+  add.w r10, r9, #254
+  movs r11, #127
+  movs lr, #32
+  vmov.i32 q7, #65535
+
+.Lsmaugt_interp_loop:
+  vctp.32 r11
+  vpst
+  vldrht.u32 q0, [r4]
+  vpst
+  vldrht.u32 q1, [r5]
+  vpst
+  vldrht.u32 q2, [r6]
+  vpst
+  vldrht.u32 q3, [r7]
+  mov r1, r8
+  vpst
+  vldrht.u32 q4, [r1]
+  mov r1, r9
+  vpst
+  vldrht.u32 q5, [r1]
+  mov r1, r10
+  vpst
+  vldrht.u32 q6, [r1]
+  /* q7 is reused for destination loads below, so recreate the wrap mask. */
+  vmov.i32 q7, #65535
+
+smaugt_slothy_interp_math_start:
+  vadd.i32 q1, q1, q4
+  vand.u32 q1, q1, q7
+  vsub.i32 q5, q5, q4
+  vand.u32 q5, q5, q7
+  vsub.i32 q3, q3, q2
+  vshr.s32 q3, q3, #1
+  vand.u32 q3, q3, q7
+  vsub.i32 q4, q4, q0
+  vand.u32 q4, q4, q7
+
+  vstrw.32 q6, [sp, #0]
+  vshl.i32 q6, q6, #6
+  vsub.i32 q4, q4, q6
+  vand.u32 q4, q4, q7
+  vldrw.u32 q6, [sp, #0]
+
+  vshl.i32 q4, q4, #1
+  vadd.i32 q4, q4, q5
+  vand.u32 q4, q4, q7
+  vadd.i32 q2, q2, q3
+  vand.u32 q2, q2, q7
+
+  vstrw.32 q2, [sp, #16]
+  vshl.i32 q2, q2, #6
+  vsub.i32 q1, q1, q2
+  vldrw.u32 q2, [sp, #16]
+  vsub.i32 q1, q1, q2
+  vand.u32 q1, q1, q7
+  vsub.i32 q2, q2, q6
+  vand.u32 q2, q2, q7
+  vsub.i32 q2, q2, q0
+  vand.u32 q2, q2, q7
+
+  vstrw.32 q2, [sp, #16]
+  movs r2, #45
+  vmul.i32 q2, q2, r2
+  vadd.i32 q1, q1, q2
+  vand.u32 q1, q1, q7
+  vldrw.u32 q2, [sp, #16]
+  vshl.i32 q2, q2, #3
+  vsub.i32 q4, q4, q2
+  movw r3, #43691
+  vmul.i32 q4, q4, r3
+  vshr.u32 q4, q4, #3
+  vand.u32 q4, q4, q7
+
+  vadd.i32 q5, q5, q1
+  vand.u32 q5, q5, q7
+  vstrw.32 q3, [sp, #32]
+  vshl.i32 q3, q3, #4
+  vadd.i32 q1, q1, q3
+  movw r3, #36409
+  vmul.i32 q1, q1, r3
+  vshr.u32 q1, q1, #1
+  vand.u32 q1, q1, q7
+  vldrw.u32 q3, [sp, #32]
+  vadd.i32 q3, q3, q1
+  vneg.s32 q3, q3
+  vand.u32 q3, q3, q7
+
+  movs r2, #30
+  vmul.i32 q2, q1, r2
+  vsub.i32 q5, q2, q5
+  movw r3, #61167
+  vmul.i32 q5, q5, r3
+  vshr.u32 q5, q5, #2
+  vand.u32 q5, q5, q7
+  vldrw.u32 q2, [sp, #16]
+  vsub.i32 q2, q2, q4
+  vand.u32 q2, q2, q7
+  vsub.i32 q1, q1, q5
+  vand.u32 q1, q1, q7
+smaugt_slothy_interp_math_end:
+
+  /* c += {r6,r5,r4,r3,r2,r1,r0} at coefficient offsets 0..384. */
+smaugt_slothy_interp_store_start:
+  mov r1, r0
+  vpst
+  vldrht.u32 q7, [r1]
+  vadd.i32 q7, q7, q6
+  vpst
+  vstrht.32 q7, [r1]
+  add.w r1, r1, #128
+  vpst
+  vldrht.u32 q7, [r1]
+  vadd.i32 q7, q7, q5
+  vpst
+  vstrht.32 q7, [r1]
+  add.w r1, r1, #128
+  vpst
+  vldrht.u32 q7, [r1]
+  vadd.i32 q7, q7, q4
+  vpst
+  vstrht.32 q7, [r1]
+  add.w r1, r1, #128
+  vpst
+  vldrht.u32 q7, [r1]
+  vadd.i32 q7, q7, q3
+  vpst
+  vstrht.32 q7, [r1]
+  add.w r1, r1, #128
+  vpst
+  vldrht.u32 q7, [r1]
+  vadd.i32 q7, q7, q2
+  vpst
+  vstrht.32 q7, [r1]
+  add.w r1, r1, #128
+  vpst
+  vldrht.u32 q7, [r1]
+  vadd.i32 q7, q7, q1
+  vpst
+  vstrht.32 q7, [r1]
+  add.w r1, r1, #128
+  vpst
+  vldrht.u32 q7, [r1]
+  vadd.i32 q7, q7, q0
+  vpst
+  vstrht.32 q7, [r1]
+smaugt_slothy_interp_store_end:
+
+  add r4, r4, #8
+  add r5, r5, #8
+  add r6, r6, #8
+  add r7, r7, #8
+  add r8, r8, #8
+  add r9, r9, #8
+  add r10, r10, #8
+  add r0, r0, #8
+  subs r11, r11, #4
+  subs lr, lr, #1
+  bne .Lsmaugt_interp_loop
+
+  add sp, sp, #48
+  vpop {d8-d15}
+  add sp, sp, #4
+  pop {r4-r11, pc}
+SMAUGT_END smaugt_toom_interpolate_add_m55
+
+/* r0=res[256], r1=c[512], r2=public shift. */
+SMAUGT_FUNCTION smaugt_toom_reduce_add_m55
+  vdup.16 q3, r2
+  add.w r12, r1, #512
+  movs r3, #32
+.Lsmaugt_reduce_loop:
+smaugt_slothy_reduce_start:
+  vldrh.u16 q0, [r0]
+  vldrh.u16 q1, [r1], #16
+  vldrh.u16 q2, [r12], #16
+  vsub.i16 q1, q1, q2
+  vshl.s16 q1, q1, q3
+  vadd.i16 q0, q0, q1
+  vstrh.16 q0, [r0], #16
+smaugt_slothy_reduce_end:
+  subs r3, r3, #1
+  bne .Lsmaugt_reduce_loop
+  bx lr
+SMAUGT_END smaugt_toom_reduce_add_m55
+
+.section .note.GNU-stack,"",%progbits

@@ -1,0 +1,128 @@
+optimization/haetae/HAETAE5/fft.c:161:13: warning: '_complex_mul' defined but not used [-Wunused-function]
+  161 | static void _complex_mul(complex_fp32_16 *r, const complex_fp32_16 x,
+      |             ^~~~~~~~~~~~
+optimization/haetae/HAETAE5/packing.c: In function 'cryptolab_haetae_mode5_unpack_sig':
+optimization/haetae/HAETAE5/packing.c:281:12: warning: declaration of 'i' shadows a previous local [-Wshadow]
+  281 |   for (int i = 0;
+      |            ^
+optimization/haetae/HAETAE5/packing.c:245:16: note: shadowed declaration is here
+  245 |   unsigned int i;
+      |                ^
+optimization/haetae/HAETAE5/sampler.c: In function 'sample_gauss':
+optimization/haetae/HAETAE5/sampler.c:259:41: warning: variable 'cnt' set but not used [-Wunused-but-set-variable=]
+  259 |   size_t bytecnt = buflen, coefcnt = 0, cnt = 0;
+      |                                         ^~~
+optimization/haetae/HAETAE5/sampler.c: At top level:
+optimization/haetae/HAETAE5/sampler.c:140:23: warning: 'CDT' defined but not used [-Wunused-const-variable=]
+  140 | static const uint32_t CDT[CDTLEN] = {
+      |                       ^~~
+optimization/haetae/HAETAE5/sign.c: In function 'cryptolab_haetae_mode5_verify':
+optimization/haetae/HAETAE5/sign.c:941:10: warning: unused variable 'i' [-Wunused-variable]
+  941 |   size_t i;
+      |          ^
+reference/haetae/HAETAE5/packing.c: In function 'cryptolab_haetae_mode5_unpack_sig':
+reference/haetae/HAETAE5/packing.c:277:12: warning: declaration of 'i' shadows a previous local [-Wshadow]
+  277 |   for (int i = 0;
+      |            ^
+reference/haetae/HAETAE5/packing.c:245:16: note: shadowed declaration is here
+  245 |   unsigned int i;
+      |                ^
+reference/haetae/HAETAE5/sampler.c: In function 'sample_gauss':
+reference/haetae/HAETAE5/sampler.c:240:41: warning: variable 'cnt' set but not used [-Wunused-but-set-variable=]
+  240 |   size_t bytecnt = buflen, coefcnt = 0, cnt = 0;
+      |                                         ^~~
+reference/haetae/HAETAE5/sign.c: In function 'cryptolab_haetae_mode5_verify':
+reference/haetae/HAETAE5/sign.c:511:10: warning: unused variable 'i' [-Wunused-variable]
+  511 |   size_t i;
+      |          ^
+/opt/homebrew/opt/arm-none-eabi-binutils/bin/arm-none-eabi-ld: warning: _arm_addsubdf3.o: missing .note.GNU-stack section implies executable stack
+/opt/homebrew/opt/arm-none-eabi-binutils/bin/arm-none-eabi-ld: NOTE: This behaviour is deprecated and will be removed in a future version of the linker
+   text	   data	    bss	    dec	    hex	filename
+ 106272	     16	1097232	1203520	 125d40	build/stm32n657/clock-600mhz/optimization/haetae5/iter-1/profile-0/diff-1/rejection-0/keccak-pqm4_persistent/kernel-m55_scalar_sched/rc-memory/x4-1-asm_slothy-slothy_gather_u2_fullperm_chi5_allpaths/ntt-m32_l332_vld4_u2-asm_slothy-paired_vld4_u2_l34_hier-arith_d2-inv_slothy_u1-point_slothy_lowmem-pointacc_slothy_block2-barrett_slothy_u2_nostack-centered_slothy_mask_u2/acc-aftersum_dmax_tight_precenter_poly/fft-qrd_soa_l2222_vtbl_fused_u4-asm_slothy-soa_reuse_vecsq_u2_hier/sampler-cdt_mve_load-asm_hand-unroll/mul-scalar-asm_slothy-slothy_fused_tailpred_stable_u1-all/cache-0/shift-copy/stack-baseline/haetae5.elf
+KPQC_M55_BENCH,version=1,scheme=HAETAE5,implementation=optimization,platform=stm32n657,timer=dwt_cyccnt,iterations=1,warmup_iterations=1
+PLATFORM_CONFIG,name=stm32n657,core_clock_hz=600000000,hclk_hz=200000000,axisram_clock_hz=400000000,icache=on,dcache=on,interrupts=disabled,code_data=secure_axisram,timer_read_overhead=5
+SIZES,public_key=2080,secret_key=2752,signature=2948
+KECCAK_X4_PREFLIGHT,status=ok
+FFT_PREFLIGHT,status=ok
+SELFTEST,ok
+KAT,status=ok
+CDT_EXHAUSTIVE,inputs=65536,status=ok
+REDUCTION_EQUIV_DIGEST,cases=256000,reduce2q=8903070521311021081,freeze2q=933405570144900559,freeze=1253936812721992604
+DIFF,iterations=1000,status=ok
+RESULT,scheme=HAETAE5,implementation=optimization,operation=keccak_permutation,sample=1,ticks=11726
+SUMMARY,scheme=HAETAE5,implementation=optimization,operation=keccak_permutation,min=11726,max=11726,mean=11726,median=11726
+STACK,scheme=HAETAE5,implementation=optimization,operation=keccak_permutation,peak_bytes=360
+RESULT,scheme=HAETAE5,implementation=optimization,operation=keccak_stream,sample=1,ticks=62671
+SUMMARY,scheme=HAETAE5,implementation=optimization,operation=keccak_stream,min=62671,max=62671,mean=62671,median=62671
+STACK,scheme=HAETAE5,implementation=optimization,operation=keccak_stream,peak_bytes=360
+RESULT,scheme=HAETAE5,implementation=optimization,operation=keccak_permutation_x4_sequential,sample=1,ticks=45802
+SUMMARY,scheme=HAETAE5,implementation=optimization,operation=keccak_permutation_x4_sequential,min=45802,max=45802,mean=45802,median=45802
+STACK,scheme=HAETAE5,implementation=optimization,operation=keccak_permutation_x4_sequential,peak_bytes=376
+RESULT,scheme=HAETAE5,implementation=optimization,operation=keccak_permutation_x4_mve,sample=1,ticks=26271
+SUMMARY,scheme=HAETAE5,implementation=optimization,operation=keccak_permutation_x4_mve,min=26271,max=26271,mean=26271,median=26271
+STACK,scheme=HAETAE5,implementation=optimization,operation=keccak_permutation_x4_mve,peak_bytes=392
+RESULT,scheme=HAETAE5,implementation=optimization,operation=shake128_x4_sequential,sample=1,ticks=57161
+SUMMARY,scheme=HAETAE5,implementation=optimization,operation=shake128_x4_sequential,min=57161,max=57161,mean=57161,median=57161
+STACK,scheme=HAETAE5,implementation=optimization,operation=shake128_x4_sequential,peak_bytes=608
+RESULT,scheme=HAETAE5,implementation=optimization,operation=shake128_x4_mve,sample=1,ticks=27456
+SUMMARY,scheme=HAETAE5,implementation=optimization,operation=shake128_x4_mve,min=27456,max=27456,mean=27456,median=27456
+STACK,scheme=HAETAE5,implementation=optimization,operation=shake128_x4_mve,peak_bytes=1400
+RESULT,scheme=HAETAE5,implementation=optimization,operation=keypair,sample=1,ticks=9296612
+SUMMARY,scheme=HAETAE5,implementation=optimization,operation=keypair,min=9296612,max=9296612,mean=9296612,median=9296612
+STACK,scheme=HAETAE5,implementation=optimization,operation=keypair,peak_bytes=55768
+RESULT,scheme=HAETAE5,implementation=optimization,operation=sign,sample=1,ticks=94788369
+SUMMARY,scheme=HAETAE5,implementation=optimization,operation=sign,min=94788369,max=94788369,mean=94788369,median=94788369
+STACK,scheme=HAETAE5,implementation=optimization,operation=sign,peak_bytes=159840
+RESULT,scheme=HAETAE5,implementation=optimization,operation=verify,sample=1,ticks=1683628
+SUMMARY,scheme=HAETAE5,implementation=optimization,operation=verify,min=1683628,max=1683628,mean=1683628,median=1683628
+STACK,scheme=HAETAE5,implementation=optimization,operation=verify,peak_bytes=78664
+RESULT,scheme=HAETAE5,implementation=optimization,operation=ntt,sample=1,ticks=4064
+SUMMARY,scheme=HAETAE5,implementation=optimization,operation=ntt,min=4064,max=4064,mean=4064,median=4064
+STACK,scheme=HAETAE5,implementation=optimization,operation=ntt,peak_bytes=360
+RESULT,scheme=HAETAE5,implementation=optimization,operation=invntt,sample=1,ticks=4798
+SUMMARY,scheme=HAETAE5,implementation=optimization,operation=invntt,min=4798,max=4798,mean=4798,median=4798
+STACK,scheme=HAETAE5,implementation=optimization,operation=invntt,peak_bytes=360
+RESULT,scheme=HAETAE5,implementation=optimization,operation=pointwise,sample=1,ticks=2198
+SUMMARY,scheme=HAETAE5,implementation=optimization,operation=pointwise,min=2198,max=2198,mean=2198,median=2198
+STACK,scheme=HAETAE5,implementation=optimization,operation=pointwise,peak_bytes=360
+RESULT,scheme=HAETAE5,implementation=optimization,operation=pointwise_acc,sample=1,ticks=32667
+SUMMARY,scheme=HAETAE5,implementation=optimization,operation=pointwise_acc,min=32667,max=32667,mean=32667,median=32667
+STACK,scheme=HAETAE5,implementation=optimization,operation=pointwise_acc,peak_bytes=360
+RESULT,scheme=HAETAE5,implementation=optimization,operation=barrett_tight,sample=1,ticks=555
+SUMMARY,scheme=HAETAE5,implementation=optimization,operation=barrett_tight,min=555,max=555,mean=555,median=555
+STACK,scheme=HAETAE5,implementation=optimization,operation=barrett_tight,peak_bytes=360
+RESULT,scheme=HAETAE5,implementation=optimization,operation=reduce2q,sample=1,ticks=1073
+SUMMARY,scheme=HAETAE5,implementation=optimization,operation=reduce2q,min=1073,max=1073,mean=1073,median=1073
+STACK,scheme=HAETAE5,implementation=optimization,operation=reduce2q,peak_bytes=360
+RESULT,scheme=HAETAE5,implementation=optimization,operation=freeze2q,sample=1,ticks=1202
+SUMMARY,scheme=HAETAE5,implementation=optimization,operation=freeze2q,min=1202,max=1202,mean=1202,median=1202
+STACK,scheme=HAETAE5,implementation=optimization,operation=freeze2q,peak_bytes=360
+RESULT,scheme=HAETAE5,implementation=optimization,operation=freeze,sample=1,ticks=1269
+SUMMARY,scheme=HAETAE5,implementation=optimization,operation=freeze,min=1269,max=1269,mean=1269,median=1269
+STACK,scheme=HAETAE5,implementation=optimization,operation=freeze,peak_bytes=360
+RESULT,scheme=HAETAE5,implementation=optimization,operation=pointwise_acc_precentered,sample=1,ticks=15923
+SUMMARY,scheme=HAETAE5,implementation=optimization,operation=pointwise_acc_precentered,min=15923,max=15923,mean=15923,median=15923
+STACK,scheme=HAETAE5,implementation=optimization,operation=pointwise_acc_precentered,peak_bytes=360
+RESULT,scheme=HAETAE5,implementation=optimization,operation=pointwise_acc_u16_precentered,sample=1,ticks=5863
+SUMMARY,scheme=HAETAE5,implementation=optimization,operation=pointwise_acc_u16_precentered,min=5863,max=5863,mean=5863,median=5863
+STACK,scheme=HAETAE5,implementation=optimization,operation=pointwise_acc_u16_precentered,peak_bytes=360
+RESULT,scheme=HAETAE5,implementation=optimization,operation=fft_init,sample=1,ticks=4344
+SUMMARY,scheme=HAETAE5,implementation=optimization,operation=fft_init,min=4344,max=4344,mean=4344,median=4344
+STACK,scheme=HAETAE5,implementation=optimization,operation=fft_init,peak_bytes=360
+RESULT,scheme=HAETAE5,implementation=optimization,operation=fft,sample=1,ticks=13885
+SUMMARY,scheme=HAETAE5,implementation=optimization,operation=fft,min=13885,max=13885,mean=13885,median=13885
+STACK,scheme=HAETAE5,implementation=optimization,operation=fft,peak_bytes=2392
+RESULT,scheme=HAETAE5,implementation=optimization,operation=fft_sqabs,sample=1,ticks=9150
+SUMMARY,scheme=HAETAE5,implementation=optimization,operation=fft_sqabs,min=9150,max=9150,mean=9150,median=9150
+STACK,scheme=HAETAE5,implementation=optimization,operation=fft_sqabs,peak_bytes=360
+RESULT,scheme=HAETAE5,implementation=optimization,operation=fft_fused_sqabs,sample=1,ticks=16595
+SUMMARY,scheme=HAETAE5,implementation=optimization,operation=fft_fused_sqabs,min=16595,max=16595,mean=16595,median=16595
+STACK,scheme=HAETAE5,implementation=optimization,operation=fft_fused_sqabs,peak_bytes=2408
+RESULT,scheme=HAETAE5,implementation=optimization,operation=sampler_cdt_leaf,sample=1,ticks=382
+SUMMARY,scheme=HAETAE5,implementation=optimization,operation=sampler_cdt_leaf,min=382,max=382,mean=382,median=382
+STACK,scheme=HAETAE5,implementation=optimization,operation=sampler_cdt_leaf,peak_bytes=376
+RESULT,scheme=HAETAE5,implementation=optimization,operation=sampler_gauss_N,sample=1,ticks=581012
+SUMMARY,scheme=HAETAE5,implementation=optimization,operation=sampler_gauss_N,min=581012,max=581012,mean=581012,median=581012
+STACK,scheme=HAETAE5,implementation=optimization,operation=sampler_gauss_N,peak_bytes=4856
+MEMORY,stack_peak_bytes=159840
+STATUS,ok

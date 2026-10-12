@@ -1,0 +1,167 @@
+{
+  "algorithms": [
+    "haetae2",
+    "haetae3",
+    "haetae5",
+    "smaugt1",
+    "smaugt3",
+    "smaugt5"
+  ],
+  "compiler_flags": "-mcpu=cortex-m55 -mthumb -mfloat-abi=hard -O3",
+  "configs": {
+    "assembly": {
+      "implementation": "optimization",
+      "variables": {
+        "ACC_VARIANT": "aftersum_dmax_tight_precenter_poly",
+        "FFT_VARIANT": "qrd_soa_l2222_vtbl_fused_u4",
+        "HAETAE2_STACK_CONFIG": "baseline",
+        "HAETAE3_STACK_CONFIG": "baseline",
+        "HAETAE5_STACK_CONFIG": "baseline",
+        "HAETAE_FFT_ASM_VARIANT": "hand_soa_l2222",
+        "HAETAE_FFT_BACKEND": "asm_hand",
+        "HAETAE_NTT_ARITH_VARIANT": "d1",
+        "HAETAE_NTT_ASM_VARIANT": "hand_l332_vld4_u2",
+        "HAETAE_NTT_BACKEND": "asm_hand",
+        "HAETAE_NTT_BARRETT_VARIANT": "hand",
+        "HAETAE_NTT_CENTERED_VARIANT": "hand",
+        "HAETAE_NTT_INVERSE_VARIANT": "hand",
+        "HAETAE_NTT_POINTWISE_ACC_VARIANT": "hand",
+        "HAETAE_NTT_POINTWISE_VARIANT": "hand",
+        "HAETAE_SAMPLER_ASM_VARIANT": "unroll",
+        "HAETAE_SAMPLER_BACKEND": "asm_hand",
+        "KECCAK_KERNEL": "m55_scalar_sched",
+        "KECCAK_RC": "memory",
+        "KECCAK_VARIANT": "pqm4_persistent",
+        "KECCAK_X4": "1",
+        "KECCAK_X4_ASM_VARIANT": "hand_gather_v2",
+        "KECCAK_X4_BACKEND": "asm_hand",
+        "MUL_CACHE": "1",
+        "MUL_VARIANT": "toom4_outer32",
+        "NTT_VARIANT": "m32_l332_vld4_u2",
+        "SAMPLER_VARIANT": "cdt_mve_load",
+        "SHIFT_VARIANT": "mask",
+        "SMAUGT1_STACK_CONFIG": "baseline",
+        "SMAUGT3_STACK_CONFIG": "baseline",
+        "SMAUGT5_STACK_CONFIG": "baseline",
+        "SMAUGT_TOOM_ASM_COMPONENT": "all",
+        "SMAUGT_TOOM_ASM_VARIANT": "hand_fused",
+        "SMAUGT_TOOM_BACKEND": "asm_hand"
+      }
+    },
+    "final": {
+      "implementation": "optimization",
+      "variables": {
+        "ACC_VARIANT": "aftersum_dmax_tight_precenter_poly",
+        "FFT_VARIANT": "qrd_soa_l2222_vtbl_fused_u4",
+        "HAETAE2_STACK_CONFIG": "baseline",
+        "HAETAE3_STACK_CONFIG": "baseline",
+        "HAETAE5_STACK_CONFIG": "baseline",
+        "HAETAE_FFT_ASM_VARIANT": "soa_reuse_vecsq_u2_hier",
+        "HAETAE_FFT_BACKEND": "asm_slothy",
+        "HAETAE_NTT_ARITH_VARIANT": "d2",
+        "HAETAE_NTT_ASM_VARIANT": "paired_vld4_u2_l34_hier",
+        "HAETAE_NTT_BACKEND": "asm_slothy",
+        "HAETAE_NTT_BARRETT_VARIANT": "slothy_u2_nostack",
+        "HAETAE_NTT_CENTERED_VARIANT": "slothy_mask_u2",
+        "HAETAE_NTT_INVERSE_VARIANT": "slothy_u1",
+        "HAETAE_NTT_POINTWISE_ACC_VARIANT": "slothy_block2",
+        "HAETAE_NTT_POINTWISE_VARIANT": "slothy_lowmem",
+        "HAETAE_SAMPLER_ASM_VARIANT": "unroll",
+        "HAETAE_SAMPLER_BACKEND": "asm_hand",
+        "KECCAK_KERNEL": "m55_scalar_sched",
+        "KECCAK_RC": "memory",
+        "KECCAK_VARIANT": "pqm4_persistent",
+        "KECCAK_X4": "1",
+        "KECCAK_X4_ASM_VARIANT": "slothy_gather_u2_fullperm_chi5_allpaths",
+        "KECCAK_X4_BACKEND": "asm_slothy",
+        "MUL_CACHE": "1",
+        "MUL_VARIANT": "toom4_outer32",
+        "NTT_VARIANT": "m32_l332_vld4_u2",
+        "SAMPLER_VARIANT": "cdt_mve_load",
+        "SHIFT_VARIANT": "mask",
+        "SMAUGT1_STACK_CONFIG": "baseline",
+        "SMAUGT3_STACK_CONFIG": "baseline",
+        "SMAUGT5_STACK_CONFIG": "baseline",
+        "SMAUGT_TOOM_ASM_COMPONENT": "all",
+        "SMAUGT_TOOM_ASM_VARIANT": "slothy_fused_tailpred_stable_u1",
+        "SMAUGT_TOOM_BACKEND": "asm_slothy"
+      }
+    },
+    "intrinsic": {
+      "implementation": "optimization",
+      "variables": {
+        "ACC_VARIANT": "aftersum_dmax_tight_precenter_poly",
+        "FFT_VARIANT": "qrd_soa_l2222_vtbl_fused_u4",
+        "HAETAE2_STACK_CONFIG": "baseline",
+        "HAETAE3_STACK_CONFIG": "baseline",
+        "HAETAE5_STACK_CONFIG": "baseline",
+        "HAETAE_FFT_BACKEND": "intrinsic",
+        "HAETAE_NTT_BACKEND": "intrinsic",
+        "HAETAE_SAMPLER_BACKEND": "intrinsic",
+        "KECCAK_KERNEL": "m55_scalar_sched",
+        "KECCAK_RC": "memory",
+        "KECCAK_VARIANT": "pqm4_persistent",
+        "KECCAK_X4": "1",
+        "KECCAK_X4_BACKEND": "intrinsic",
+        "MUL_CACHE": "1",
+        "MUL_VARIANT": "toom4_outer32",
+        "NTT_VARIANT": "m32_l332_vld4_u2",
+        "SAMPLER_VARIANT": "cdt_mve_load",
+        "SHIFT_VARIANT": "mask",
+        "SMAUGT1_STACK_CONFIG": "baseline",
+        "SMAUGT3_STACK_CONFIG": "baseline",
+        "SMAUGT5_STACK_CONFIG": "baseline",
+        "SMAUGT_TOOM_BACKEND": "intrinsic"
+      }
+    },
+    "reference": {
+      "implementation": "reference",
+      "variables": {
+        "HAETAE2_STACK_CONFIG": "baseline",
+        "HAETAE3_STACK_CONFIG": "baseline",
+        "HAETAE5_STACK_CONFIG": "baseline",
+        "SMAUGT1_STACK_CONFIG": "baseline",
+        "SMAUGT3_STACK_CONFIG": "baseline",
+        "SMAUGT5_STACK_CONFIG": "baseline"
+      }
+    }
+  },
+  "context_baseline": "reference",
+  "iterations_per_set": 100,
+  "orders": [
+    [
+      "reference",
+      "intrinsic",
+      "assembly",
+      "final"
+    ],
+    [
+      "intrinsic",
+      "assembly",
+      "final",
+      "reference"
+    ],
+    [
+      "assembly",
+      "final",
+      "reference",
+      "intrinsic"
+    ],
+    [
+      "final",
+      "reference",
+      "intrinsic",
+      "assembly"
+    ]
+  ],
+  "primary_baseline": "intrinsic",
+  "qemu_used_for_reportable_results": false,
+  "sets": 4,
+  "speedups": {
+    "assembly": "intrinsic_cycles / assembly_cycles",
+    "slothy_incremental": "assembly_cycles / final_cycles",
+    "total": "intrinsic_cycles / final_cycles"
+  },
+  "stack_metric": "per-operation runtime high-water mark in bytes",
+  "timer": "DWT CYCCNT"
+}

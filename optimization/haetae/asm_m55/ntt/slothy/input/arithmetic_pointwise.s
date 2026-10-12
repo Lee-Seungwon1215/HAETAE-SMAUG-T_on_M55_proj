@@ -1,0 +1,42 @@
+// SPDX-License-Identifier: MIT
+// HAETAE q=64513 exact pointwise/R-inverse loop, normalized for Slothy.
+
+.syntax unified
+.thumb
+.arch armv8.1-m.main
+.arch_extension mve
+
+.macro haetae_barrett value, quotient
+        vqrdmulh.s32 \quotient, \value, r4
+        vmla.s32     \value,    \quotient, r5
+.endm
+
+.section .text.haetae_pointwise_kernel_slothy, "ax", %progbits
+.align 2
+.global haetae_pointwise_kernel_slothy
+.type haetae_pointwise_kernel_slothy, %function
+.thumb_func
+haetae_pointwise_kernel_slothy:
+        push {r4-r8, lr}
+        movw r4, #33288
+        movw r5, #64513
+        rsb r5, r5, #0
+        ldr r6, =-14127
+        ldr r7, =-470254080
+        mov lr, #64
+        dls lr, lr
+haetae_pointwise_kernel_loop:
+        vldrw.u32 q0, [r1], #16
+        vldrw.u32 q1, [r2], #16
+        haetae_barrett q0, q2
+        haetae_barrett q1, q2
+        vmul.s32 q0, q0, q1
+        haetae_barrett q0, q2
+        vmul.s32 q1, q0, r6
+        vqrdmulh.s32 q2, q0, r7
+        vmla.s32 q1, q2, r5
+        vstrw.32 q1, [r0], #16
+        le lr, haetae_pointwise_kernel_loop
+        pop {r4-r8, lr}
+        bx lr
+.size haetae_pointwise_kernel_slothy, .-haetae_pointwise_kernel_slothy

@@ -1,0 +1,17 @@
+{
+  "architecture": "Arm_v81M",
+  "target": "Arm_Cortex_M55",
+  "input": "optimization/smaug/asm_m55/toom/slothy/output/toom_outer32_fused_u1.S",
+  "output": "optimization/smaug/asm_m55/toom/slothy/output/toom_outer32_fused_tailpred_stable_u1.S",
+  "selected_regions": [
+    "interp_store"
+  ],
+  "regions": [
+    {
+      "region": "interp_store",
+      "status": "scheduled",
+      "returncode": 0,
+      "log": "optimization/smaug/asm_m55/toom/slothy/logs_tailpred_stable/01_interp_store.log"
+    }
+  ]
+}

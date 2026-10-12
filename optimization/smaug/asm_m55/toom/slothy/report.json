@@ -1,0 +1,115 @@
+{
+  "architecture": "Arm_v81M",
+  "target": "Arm_Cortex_M55",
+  "input": "optimization/smaug/asm_m55/toom/slothy/input/toom_outer32_fused.s",
+  "output": "optimization/smaug/asm_m55/toom/slothy/output/toom_outer32_fused_u1.S",
+  "selected_regions": [
+    "eval",
+    "sum32",
+    "zero_leaves",
+    "leaf_z0",
+    "leaf_z2",
+    "leaf_z1",
+    "copy_edges",
+    "acc_edges",
+    "middle",
+    "interp_math_a",
+    "interp_math_b",
+    "interp_math_c",
+    "interp_math_d",
+    "interp_store",
+    "reduce"
+  ],
+  "regions": [
+    {
+      "region": "eval",
+      "status": "scheduled",
+      "returncode": 0,
+      "log": "optimization/smaug/asm_m55/toom/slothy/logs/01_eval.log"
+    },
+    {
+      "region": "sum32",
+      "status": "scheduled",
+      "returncode": 0,
+      "log": "optimization/smaug/asm_m55/toom/slothy/logs/02_sum32.log"
+    },
+    {
+      "region": "zero_leaves",
+      "status": "scheduled",
+      "returncode": 0,
+      "log": "optimization/smaug/asm_m55/toom/slothy/logs/03_zero_leaves.log"
+    },
+    {
+      "region": "leaf_z0",
+      "status": "scheduled",
+      "returncode": 0,
+      "log": "optimization/smaug/asm_m55/toom/slothy/logs/04_leaf_z0.log"
+    },
+    {
+      "region": "leaf_z2",
+      "status": "scheduled",
+      "returncode": 0,
+      "log": "optimization/smaug/asm_m55/toom/slothy/logs/05_leaf_z2.log"
+    },
+    {
+      "region": "leaf_z1",
+      "status": "scheduled",
+      "returncode": 0,
+      "log": "optimization/smaug/asm_m55/toom/slothy/logs/06_leaf_z1.log"
+    },
+    {
+      "region": "copy_edges",
+      "status": "scheduled",
+      "returncode": 0,
+      "log": "optimization/smaug/asm_m55/toom/slothy/logs/07_copy_edges.log"
+    },
+    {
+      "region": "acc_edges",
+      "status": "scheduled",
+      "returncode": 0,
+      "log": "optimization/smaug/asm_m55/toom/slothy/logs/08_acc_edges.log"
+    },
+    {
+      "region": "middle",
+      "status": "scheduled",
+      "returncode": 0,
+      "log": "optimization/smaug/asm_m55/toom/slothy/logs/09_middle.log"
+    },
+    {
+      "region": "interp_math_a",
+      "status": "scheduled",
+      "returncode": 0,
+      "log": "optimization/smaug/asm_m55/toom/slothy/logs/10_interp_math_a.log"
+    },
+    {
+      "region": "interp_math_b",
+      "status": "scheduled",
+      "returncode": 0,
+      "log": "optimization/smaug/asm_m55/toom/slothy/logs/11_interp_math_b.log"
+    },
+    {
+      "region": "interp_math_c",
+      "status": "scheduled",
+      "returncode": 0,
+      "log": "optimization/smaug/asm_m55/toom/slothy/logs/12_interp_math_c.log"
+    },
+    {
+      "region": "interp_math_d",
+      "status": "scheduled",
+      "returncode": 0,
+      "log": "optimization/smaug/asm_m55/toom/slothy/logs/13_interp_math_d.log"
+    },
+    {
+      "region": "interp_store",
+      "status": "retained_after_failure",
+      "returncode": 1,
+      "log": "optimization/smaug/asm_m55/toom/slothy/logs/14_interp_store.log"
+    },
+    {
+      "region": "reduce",
+      "status": "scheduled",
+      "returncode": 0,
+      "log": "optimization/smaug/asm_m55/toom/slothy/logs/15_reduce.log"
+    }
+  ]
+}

@@ -1,0 +1,2 @@
+text	   data	    bss	    dec	    hex	filename
+  36880	      0	1064528	1101408	 10ce60	<repository>/build/stm32n657/clock-600mhz/optimization/smaugt3/iter-100/profile-0/diff-0/rejection-0/keccak-pqm4_persistent/kernel-m55_scalar_sched/rc-memory/x4-1-intrinsic-hand_v1/ntt-scalar-intrinsic-hand_l332_vld4_u2-arith_d1-inv_hand-point_hand-pointacc_hand-barrett_hand-centered_hand/acc-none/fft-scalar-intrinsic-hand_soa_l2222/sampler-scalar-intrinsic-loop/mul-toom4_outer32-intrinsic-hand_fused-all/cache-1/shift-mask/stack-baseline/smaugt3.elf

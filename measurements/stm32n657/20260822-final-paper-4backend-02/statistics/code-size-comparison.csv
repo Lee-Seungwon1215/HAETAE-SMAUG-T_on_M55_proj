@@ -1,0 +1,7 @@
+algorithm,reference_text_bytes,intrinsic_text_bytes,assembly_text_bytes,final_text_bytes,reference_delta_vs_intrinsic_bytes,reference_delta_vs_intrinsic_percent,assembly_delta_vs_intrinsic_bytes,assembly_delta_vs_intrinsic_percent,final_delta_vs_intrinsic_bytes,final_delta_vs_intrinsic_percent
+haetae2,38480,68592,62464,66080,-30112,-43.9,-6128,-8.934,-2512,-3.662
+haetae3,38512,69264,63136,66752,-30752,-44.398,-6128,-8.847,-2512,-3.627
+haetae5,38496,69376,62992,66592,-30880,-44.511,-6384,-9.202,-2784,-4.013
+smaugt1,24272,36624,31248,31776,-12352,-33.727,-5376,-14.679,-4848,-13.237
+smaugt3,24432,36880,31504,32288,-12448,-33.753,-5376,-14.577,-4592,-12.451
+smaugt5,24672,37136,31760,32288,-12464,-33.563,-5376,-14.477,-4848,-13.055

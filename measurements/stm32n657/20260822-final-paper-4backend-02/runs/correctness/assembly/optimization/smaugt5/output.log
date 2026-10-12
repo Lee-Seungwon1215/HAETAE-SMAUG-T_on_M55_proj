@@ -1,0 +1,127 @@
+optimization/smaug/SMAUG-T5/hwt.c: In function 'cryptolab_smaugt_mode5_load16_littleendian':
+optimization/smaug/SMAUG-T5/hwt.c:20:23: warning: comparison of integer expressions of different signedness: 'int' and 'size_t' {aka 'unsigned int'} [-Wsign-compare]
+   20 |     for (int i = 0; i < outlen; ++i) {
+      |                       ^
+optimization/smaug/SMAUG-T5/packring.c:173:24: warning: argument 1 of type 'uint8_t[224]' {aka 'unsigned char[224]'} with mismatched bound [-Warray-parameter=]
+  173 | void pack_R2_7(uint8_t bytes[SMAUGT_CTPOLY2_BYTES], const poly *data) {
+      |                ~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from optimization/smaug/SMAUG-T5/packring.c:3:
+optimization/smaug/SMAUG-T5/packring.h:47:45: note: previously declared as 'uint8_t *' {aka 'unsigned char *'}
+   47 | void PACK_RING(SMAUGT_LOG_P_PRIME)(uint8_t *bytes, const poly *data);
+      |                                    ~~~~~~~~~^~~~~
+optimization/smaug/SMAUG-T5/packring.c:203:44: warning: argument 2 of type 'const uint8_t[224]' {aka 'const unsigned char[224]'} with mismatched bound [-Warray-parameter=]
+  203 | void unpack_R2_7(poly *data, const uint8_t bytes[SMAUGT_CTPOLY2_BYTES]) {
+      |                              ~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~
+optimization/smaug/SMAUG-T5/packring.h:48:65: note: previously declared as 'const uint8_t *' {aka 'const unsigned char *'}
+   48 | void UNPACK_RING(SMAUGT_LOG_P_PRIME)(poly *data, const uint8_t *bytes);
+      |                                                  ~~~~~~~~~~~~~~~^~~~~
+optimization/smaug/SMAUG-T5/packring.c:274:24: warning: argument 1 of type 'uint8_t[288]' {aka 'unsigned char[288]'} with mismatched bound [-Warray-parameter=]
+  274 | void pack_R2_9(uint8_t bytes[SMAUGT_CTPOLY1_BYTES], const poly *data) {
+      |                ~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~
+optimization/smaug/SMAUG-T5/packring.h:44:39: note: previously declared as 'uint8_t *' {aka 'unsigned char *'}
+   44 | void PACK_RING(SMAUGT_LOG_P)(uint8_t *bytes, const poly *data);
+      |                              ~~~~~~~~~^~~~~
+optimization/smaug/SMAUG-T5/packring.c:310:44: warning: argument 2 of type 'const uint8_t[288]' {aka 'const unsigned char[288]'} with mismatched bound [-Warray-parameter=]
+  310 | void unpack_R2_9(poly *data, const uint8_t bytes[SMAUGT_CTPOLY1_BYTES]) {
+      |                              ~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~
+optimization/smaug/SMAUG-T5/packring.h:45:59: note: previously declared as 'const uint8_t *' {aka 'const unsigned char *'}
+   45 | void UNPACK_RING(SMAUGT_LOG_P)(poly *data, const uint8_t *bytes);
+      |                                            ~~~~~~~~~~~~~~~^~~~~
+optimization/smaug/SMAUG-T5/packring.c:415:25: warning: argument 1 of type 'uint8_t[352]' {aka 'unsigned char[352]'} with mismatched bound [-Warray-parameter=]
+  415 | void pack_R2_11(uint8_t bytes[SMAUGT_PKPOLY_BYTES], const poly *data) {
+      |                 ~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~
+optimization/smaug/SMAUG-T5/packring.h:41:39: note: previously declared as 'uint8_t *' {aka 'unsigned char *'}
+   41 | void PACK_RING(SMAUGT_LOG_Q)(uint8_t *bytes, const poly *data);
+      |                              ~~~~~~~~~^~~~~
+optimization/smaug/SMAUG-T5/packring.c:461:45: warning: argument 2 of type 'const uint8_t[352]' {aka 'const unsigned char[352]'} with mismatched bound [-Warray-parameter=]
+  461 | void unpack_R2_11(poly *data, const uint8_t bytes[SMAUGT_PKPOLY_BYTES]) {
+      |                               ~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~
+optimization/smaug/SMAUG-T5/packring.h:42:59: note: previously declared as 'const uint8_t *' {aka 'const unsigned char *'}
+   42 | void UNPACK_RING(SMAUGT_LOG_Q)(poly *data, const uint8_t *bytes);
+      |                                            ~~~~~~~~~~~~~~~^~~~~
+reference/smaug/SMAUG-T5/hwt.c: In function 'cryptolab_smaugt_mode5_load16_littleendian':
+reference/smaug/SMAUG-T5/hwt.c:20:23: warning: comparison of integer expressions of different signedness: 'int' and 'size_t' {aka 'unsigned int'} [-Wsign-compare]
+   20 |     for (int i = 0; i < outlen; ++i) {
+      |                       ^
+reference/smaug/SMAUG-T5/packring.c:173:24: warning: argument 1 of type 'uint8_t[224]' {aka 'unsigned char[224]'} with mismatched bound [-Warray-parameter=]
+  173 | void pack_R2_7(uint8_t bytes[SMAUGT_CTPOLY2_BYTES], const poly *data) {
+      |                ~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from reference/smaug/SMAUG-T5/packring.c:3:
+reference/smaug/SMAUG-T5/packring.h:47:45: note: previously declared as 'uint8_t *' {aka 'unsigned char *'}
+   47 | void PACK_RING(SMAUGT_LOG_P_PRIME)(uint8_t *bytes, const poly *data);
+      |                                    ~~~~~~~~~^~~~~
+reference/smaug/SMAUG-T5/packring.c:203:44: warning: argument 2 of type 'const uint8_t[224]' {aka 'const unsigned char[224]'} with mismatched bound [-Warray-parameter=]
+  203 | void unpack_R2_7(poly *data, const uint8_t bytes[SMAUGT_CTPOLY2_BYTES]) {
+      |                              ~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~
+reference/smaug/SMAUG-T5/packring.h:48:65: note: previously declared as 'const uint8_t *' {aka 'const unsigned char *'}
+   48 | void UNPACK_RING(SMAUGT_LOG_P_PRIME)(poly *data, const uint8_t *bytes);
+      |                                                  ~~~~~~~~~~~~~~~^~~~~
+reference/smaug/SMAUG-T5/packring.c:274:24: warning: argument 1 of type 'uint8_t[288]' {aka 'unsigned char[288]'} with mismatched bound [-Warray-parameter=]
+  274 | void pack_R2_9(uint8_t bytes[SMAUGT_CTPOLY1_BYTES], const poly *data) {
+      |                ~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~
+reference/smaug/SMAUG-T5/packring.h:44:39: note: previously declared as 'uint8_t *' {aka 'unsigned char *'}
+   44 | void PACK_RING(SMAUGT_LOG_P)(uint8_t *bytes, const poly *data);
+      |                              ~~~~~~~~~^~~~~
+reference/smaug/SMAUG-T5/packring.c:310:44: warning: argument 2 of type 'const uint8_t[288]' {aka 'const unsigned char[288]'} with mismatched bound [-Warray-parameter=]
+  310 | void unpack_R2_9(poly *data, const uint8_t bytes[SMAUGT_CTPOLY1_BYTES]) {
+      |                              ~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~
+reference/smaug/SMAUG-T5/packring.h:45:59: note: previously declared as 'const uint8_t *' {aka 'const unsigned char *'}
+   45 | void UNPACK_RING(SMAUGT_LOG_P)(poly *data, const uint8_t *bytes);
+      |                                            ~~~~~~~~~~~~~~~^~~~~
+reference/smaug/SMAUG-T5/packring.c:415:25: warning: argument 1 of type 'uint8_t[352]' {aka 'unsigned char[352]'} with mismatched bound [-Warray-parameter=]
+  415 | void pack_R2_11(uint8_t bytes[SMAUGT_PKPOLY_BYTES], const poly *data) {
+      |                 ~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~
+reference/smaug/SMAUG-T5/packring.h:41:39: note: previously declared as 'uint8_t *' {aka 'unsigned char *'}
+   41 | void PACK_RING(SMAUGT_LOG_Q)(uint8_t *bytes, const poly *data);
+      |                              ~~~~~~~~~^~~~~
+reference/smaug/SMAUG-T5/packring.c:461:45: warning: argument 2 of type 'const uint8_t[352]' {aka 'const unsigned char[352]'} with mismatched bound [-Warray-parameter=]
+  461 | void unpack_R2_11(poly *data, const uint8_t bytes[SMAUGT_PKPOLY_BYTES]) {
+      |                               ~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~
+reference/smaug/SMAUG-T5/packring.h:42:59: note: previously declared as 'const uint8_t *' {aka 'const unsigned char *'}
+   42 | void UNPACK_RING(SMAUGT_LOG_Q)(poly *data, const uint8_t *bytes);
+      |                                            ~~~~~~~~~~~~~~~^~~~~
+/opt/homebrew/opt/arm-none-eabi-binutils/bin/arm-none-eabi-ld: warning: build/stm32n657/clock-600mhz/optimization/smaugt5/iter-1/profile-0/diff-1/rejection-0/keccak-pqm4_persistent/kernel-m55_scalar_sched/rc-memory/x4-1-asm_hand-hand_gather_v2/ntt-scalar-asm_hand-hand_l332_vld4_u2-arith_d1-inv_hand-point_hand-pointacc_hand-barrett_hand-centered_hand/acc-none/fft-scalar-asm_hand-hand_soa_l2222/sampler-scalar-asm_hand-unroll/mul-toom4_outer32-asm_hand-hand_fused-all/cache-1/shift-mask/stack-baseline/reference-objects/prefixed/fips202.o: missing .note.GNU-stack section implies executable stack
+/opt/homebrew/opt/arm-none-eabi-binutils/bin/arm-none-eabi-ld: NOTE: This behaviour is deprecated and will be removed in a future version of the linker
+   text	   data	    bss	    dec	    hex	filename
+  52976	     16	1096144	1149136	 1188d0	build/stm32n657/clock-600mhz/optimization/smaugt5/iter-1/profile-0/diff-1/rejection-0/keccak-pqm4_persistent/kernel-m55_scalar_sched/rc-memory/x4-1-asm_hand-hand_gather_v2/ntt-scalar-asm_hand-hand_l332_vld4_u2-arith_d1-inv_hand-point_hand-pointacc_hand-barrett_hand-centered_hand/acc-none/fft-scalar-asm_hand-hand_soa_l2222/sampler-scalar-asm_hand-unroll/mul-toom4_outer32-asm_hand-hand_fused-all/cache-1/shift-mask/stack-baseline/smaugt5.elf
+KPQC_M55_BENCH,version=1,scheme=SMAUG-T5,implementation=optimization,platform=stm32n657,timer=dwt_cyccnt,iterations=1,warmup_iterations=1
+PLATFORM_CONFIG,name=stm32n657,core_clock_hz=600000000,hclk_hz=200000000,axisram_clock_hz=400000000,icache=on,dcache=on,interrupts=disabled,code_data=secure_axisram,timer_read_overhead=5
+SIZES,public_key=1440,secret_key=1728,ciphertext=1376
+SELFTEST,ok
+KAT,status=ok
+DIFF,iterations=1000,status=ok
+RESULT,scheme=SMAUG-T5,implementation=optimization,operation=keccak_permutation,sample=1,ticks=11744
+SUMMARY,scheme=SMAUG-T5,implementation=optimization,operation=keccak_permutation,min=11744,max=11744,mean=11744,median=11744
+STACK,scheme=SMAUG-T5,implementation=optimization,operation=keccak_permutation,peak_bytes=312
+RESULT,scheme=SMAUG-T5,implementation=optimization,operation=keccak_stream,sample=1,ticks=62548
+SUMMARY,scheme=SMAUG-T5,implementation=optimization,operation=keccak_stream,min=62548,max=62548,mean=62548,median=62548
+STACK,scheme=SMAUG-T5,implementation=optimization,operation=keccak_stream,peak_bytes=312
+RESULT,scheme=SMAUG-T5,implementation=optimization,operation=keccak_permutation_x4_sequential,sample=1,ticks=45467
+SUMMARY,scheme=SMAUG-T5,implementation=optimization,operation=keccak_permutation_x4_sequential,min=45467,max=45467,mean=45467,median=45467
+STACK,scheme=SMAUG-T5,implementation=optimization,operation=keccak_permutation_x4_sequential,peak_bytes=328
+RESULT,scheme=SMAUG-T5,implementation=optimization,operation=keccak_permutation_x4_mve,sample=1,ticks=31462
+SUMMARY,scheme=SMAUG-T5,implementation=optimization,operation=keccak_permutation_x4_mve,min=31462,max=31462,mean=31462,median=31462
+STACK,scheme=SMAUG-T5,implementation=optimization,operation=keccak_permutation_x4_mve,peak_bytes=344
+RESULT,scheme=SMAUG-T5,implementation=optimization,operation=shake128_x4_sequential,sample=1,ticks=57115
+SUMMARY,scheme=SMAUG-T5,implementation=optimization,operation=shake128_x4_sequential,min=57115,max=57115,mean=57115,median=57115
+STACK,scheme=SMAUG-T5,implementation=optimization,operation=shake128_x4_sequential,peak_bytes=560
+RESULT,scheme=SMAUG-T5,implementation=optimization,operation=shake128_x4_mve,sample=1,ticks=32357
+SUMMARY,scheme=SMAUG-T5,implementation=optimization,operation=shake128_x4_mve,min=32357,max=32357,mean=32357,median=32357
+STACK,scheme=SMAUG-T5,implementation=optimization,operation=shake128_x4_mve,peak_bytes=1352
+RESULT,scheme=SMAUG-T5,implementation=optimization,operation=keypair,sample=1,ticks=1506041
+SUMMARY,scheme=SMAUG-T5,implementation=optimization,operation=keypair,min=1506041,max=1506041,mean=1506041,median=1506041
+STACK,scheme=SMAUG-T5,implementation=optimization,operation=keypair,peak_bytes=21064
+RESULT,scheme=SMAUG-T5,implementation=optimization,operation=encapsulate,sample=1,ticks=1322187
+SUMMARY,scheme=SMAUG-T5,implementation=optimization,operation=encapsulate,min=1322187,max=1322187,mean=1322187,median=1322187
+STACK,scheme=SMAUG-T5,implementation=optimization,operation=encapsulate,peak_bytes=23712
+RESULT,scheme=SMAUG-T5,implementation=optimization,operation=decapsulate,sample=1,ticks=1622115
+SUMMARY,scheme=SMAUG-T5,implementation=optimization,operation=decapsulate,min=1622115,max=1622115,mean=1622115,median=1622115
+STACK,scheme=SMAUG-T5,implementation=optimization,operation=decapsulate,peak_bytes=25192
+RESULT,scheme=SMAUG-T5,implementation=optimization,operation=poly_mul_acc,sample=1,ticks=40144
+SUMMARY,scheme=SMAUG-T5,implementation=optimization,operation=poly_mul_acc,min=40144,max=40144,mean=40144,median=40144
+STACK,scheme=SMAUG-T5,implementation=optimization,operation=poly_mul_acc,peak_bytes=5320
+RESULT,scheme=SMAUG-T5,implementation=optimization,operation=matrix_vec_mult,sample=1,ticks=509942
+SUMMARY,scheme=SMAUG-T5,implementation=optimization,operation=matrix_vec_mult,min=509942,max=509942,mean=509942,median=509942
+STACK,scheme=SMAUG-T5,implementation=optimization,operation=matrix_vec_mult,peak_bytes=8064
+MEMORY,stack_peak_bytes=25320
+STATUS,ok
